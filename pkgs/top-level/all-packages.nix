@@ -16860,6 +16860,8 @@ with pkgs;
 
   nedit = callPackage ../applications/editors/nedit { };
 
+  nitroshare = libsForQt5.callPackage ../applications/networking/p2p/nitroshare { };
+
   nomacs = libsForQt5.callPackage ../applications/graphics/nomacs { };
 
   notepadqq = libsForQt5.callPackage ../applications/editors/notepadqq { };
