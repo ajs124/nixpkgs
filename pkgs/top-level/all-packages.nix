@@ -13050,7 +13050,9 @@ with pkgs;
 
   etcd = callPackage ../servers/etcd { };
 
-  ejabberd = callPackage ../servers/xmpp/ejabberd { };
+  ejabberd = callPackage ../servers/xmpp/ejabberd {
+    openssl = openssl_1_1_0;
+  };
 
   exhibitor = callPackage ../servers/exhibitor { };
 
