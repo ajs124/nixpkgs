@@ -1,38 +1,24 @@
-{ stdenv, fetchurl, flex, systemd, perl }:
+{ stdenv, fetchurl, kernel }:
 
-stdenv.mkDerivation rec {
-  name = "drbd-8.4.4";
+let
+  kernelBuildDir = "${kernel.dev}/lib/modules/${kernel.modDirVersion}/build";
+  modDestDir = "$$out/lib/modules/${kernel.modDirVersion}/extra/drdb";
+in stdenv.mkDerivation rec {
+  pname = "drbd";
+  version = "9.0.19-1";
 
   src = fetchurl {
-    url = "http://oss.linbit.com/drbd/8.4/${name}.tar.gz";
-    sha256 = "1w4889h1ak7gy9w33kd4fgjlfpgmp6hzfya16p1pkc13bjf22mm0";
+    url = "https://www.linbit.com/downloads/drbd/9.0/${pname}-${version}.tar.gz";
+    sha256 = "0n7shkpiab0d44757k21kx75416ghfkxw0zr1bj40aalk75jngav";
   };
 
-  patches = [ ./pass-force.patch ];
+  nativeBuildInputs = kernel.moduleBuildDependencies;
 
-  buildInputs = [ flex perl ];
-
-  configureFlags = [
-    "--without-distro"
-    "--without-pacemaker"
-    "--localstatedir=/var"
-    "--sysconfdir=/etc"
+  makeFlags = [
+    "KVER=${kernel.version}"
+    "KDIR=${kernelBuildDir}"
+    "DESTDIR=${modDestDir}"
   ];
-
-  preConfigure =
-    ''
-      export PATH=${systemd}/sbin:$PATH
-      substituteInPlace user/Makefile.in \
-        --replace /sbin '$(sbindir)'
-      substituteInPlace user/legacy/Makefile.in \
-        --replace '$(DESTDIR)/lib/drbd' '$(DESTDIR)$(LIBDIR)'
-      substituteInPlace user/drbdadm_usage_cnt.c --replace /lib/drbd $out/lib/drbd
-      substituteInPlace scripts/drbd.rules --replace /usr/sbin/drbdadm $out/sbin/drbdadm
-    '';
-
-  makeFlags = "SHELL=${stdenv.shell}";
-
-  installFlags = "localstatedir=$(TMPDIR)/var sysconfdir=$(out)/etc INITDIR=$(out)/etc/init.d";
 
   meta = with stdenv.lib; {
     homepage = http://www.drbd.org/;

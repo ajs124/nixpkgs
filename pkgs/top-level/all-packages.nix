@@ -15101,7 +15101,7 @@ in
     lvm2 = lvm2.override {enable_dmeventd = true;};
   };
 
-  drbd = callPackage ../os-specific/linux/drbd { };
+  drbd-utils = callPackage ../os-specific/linux/drbd-utils { };
 
   dropwatch = callPackage ../os-specific/linux/dropwatch { };
 
@@ -15441,6 +15441,8 @@ in
     deepin-anything = callPackage ../os-specific/linux/deepin-anything { };
 
     dpdk = callPackage ../os-specific/linux/dpdk { };
+
+    drbd = callPackage ../os-specific/linux/drbd { };
 
     exfat-nofuse = callPackage ../os-specific/linux/exfat { };
 
