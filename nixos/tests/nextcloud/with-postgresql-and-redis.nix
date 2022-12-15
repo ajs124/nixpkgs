@@ -13,7 +13,7 @@ in {
     # The only thing the client needs to do is download a file.
     client = { ... }: {};
 
-    nextcloud = { config, pkgs, ... }: {
+    nextcloud = { config, pkgs, lib, ... }: {
       networking.firewall.allowedTCPPorts = [ 80 ];
 
       services.nextcloud = {
@@ -34,6 +34,15 @@ in {
           adminpassFile = toString (pkgs.writeText "admin-pass-file" ''
             ${adminpass}
           '');
+          trustedProxies = [ "::1" ];
+        };
+        notify_push = {
+          enable = true;
+          logLevel = "debug";
+        };
+        extraAppsEnable = true;
+        extraApps = {
+          inherit (pkgs."nextcloud${lib.versions.major config.services.nextcloud.package.version}Packages".apps) notify_push;
         };
       };
 
@@ -97,5 +106,9 @@ in {
     client.succeed(
         "${withRcloneEnv} ${diffSharedFile}"
     )
+    client.execute("timeout 10 ${pkgs.nextcloud-notify_push.passthru.test_client}/bin/test_client http://nextcloud ${adminuser} ${adminpass}")
+    out = client.execute("systemctl status nextcloud-notify_push")[1]
+    print(out)
+    assert "Sending ping to custom-admin-username" in out
   '';
 })) args
