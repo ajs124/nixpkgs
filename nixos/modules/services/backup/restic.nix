@@ -385,7 +385,8 @@ in
       # set same environment variables as the systemd service
       ${lib.pipe config.systemd.services."restic-backups-${name}".environment [
         (lib.filterAttrs (_: v: v != null))
-        (lib.mapAttrsToList (n: v: "${n}=${v}"))
+        # append, don't overwrite
+        (lib.mapAttrsToList (n: v: "${n}+=${v}"))
         (lib.concatStringsSep "\n")
       ]}
 
