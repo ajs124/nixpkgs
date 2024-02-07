@@ -178,6 +178,15 @@ PATH
       omniauth (~> 2.0)
 
 PATH
+  remote: vendor/gems/sidekiq-7.1.6
+  specs:
+    sidekiq (7.1.6)
+      concurrent-ruby (< 2)
+      connection_pool (>= 2.3.0)
+      rack (>= 2.2.4)
+      redis-client (>= 0.14.0)
+
+PATH
   remote: vendor/gems/sidekiq-reliable-fetch
   specs:
     gitlab-sidekiq-fetcher (0.11.0)
@@ -1259,7 +1268,7 @@ GEM
       coderay
       parser
       unparser
-    prometheus-client-mmap (1.1.0)
+    prometheus-client-mmap (1.1.1)
       rb_sys (~> 0.9.86)
     protocol (2.0.0)
       ruby_parser (~> 3.0)
@@ -1548,11 +1557,6 @@ GEM
     shellany (0.0.1)
     shoulda-matchers (5.1.0)
       activesupport (>= 5.2.0)
-    sidekiq (7.1.6)
-      concurrent-ruby (< 2)
-      connection_pool (>= 2.3.0)
-      rack (>= 2.2.4)
-      redis-client (>= 0.14.0)
     sidekiq-cron (1.12.0)
       fugit (~> 1.8)
       globalid (>= 1.0.1)
@@ -2024,7 +2028,7 @@ DEPENDENCIES
   pg_query (~> 4.2.3)
   png_quantizator (~> 0.2.1)
   premailer-rails (~> 1.10.3)
-  prometheus-client-mmap (~> 1.1)
+  prometheus-client-mmap (~> 1.1, >= 1.1.1)
   pry-byebug
   pry-rails (~> 0.3.9)
   pry-shell (~> 0.6.4)
@@ -2079,7 +2083,7 @@ DEPENDENCIES
   sentry-ruby (~> 5.10.0)
   sentry-sidekiq (~> 5.10.0)
   shoulda-matchers (~> 5.1.0)
-  sidekiq (~> 7.1.6)
+  sidekiq!
   sidekiq-cron (~> 1.12.0)
   sigdump (~> 0.2.4)
   simple_po_parser (~> 1.1.6)
