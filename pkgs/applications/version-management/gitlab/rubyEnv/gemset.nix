@@ -5140,10 +5140,10 @@ src:
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1swaj27qiix9r92hcvjxf6fzd817i7lfgfg2r50ifs41407rzhq3";
+      sha256 = "0irk5j73aqhyv54q3vs88y5rp9a5fkvbdif7zn5q7m5d51h2375w";
       type = "gem";
     };
-    version = "0.21.0";
+    version = "0.21.1";
   };
   redis-cluster-client = {
     dependencies = ["redis-client"];
