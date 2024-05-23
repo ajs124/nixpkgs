@@ -1,11 +1,12 @@
 { lib
 , fetchFromGitLab
+, fetchFromGitHub
 , buildGoModule
 , pkg-config
 }:
 
 let
-  version = "16.11.4";
+  version = "17.0.1";
   package_version = "v${lib.versions.major version}";
   gitaly_package = "gitlab.com/gitlab-org/gitaly/${package_version}";
 
@@ -17,10 +18,10 @@ let
       owner = "gitlab-org";
       repo = "gitaly";
       rev = "v${version}";
-      hash = "sha256-sdRKKOWoX0yyqUGpu/mqDdTq2nLZ2Gr5GNV9x99rdeU=";
+      hash = "sha256-TUzfFs5JMhyLtu/EZKxL/er3XF26owzo3BMBU31tm3c=";
     };
 
-    vendorHash = "sha256-WCZF7XVW6J1zyPx8e/Mcn+HmHElAUGcEICxiF5HLzBg=";
+    vendorHash = "sha256-rRIkbtzl7/xi/ul+cHezGShE7QL0dVVzfKY/g2N/f90=";
 
     ldflags = [ "-X ${gitaly_package}/internal/version.version=${version}" "-X ${gitaly_package}/internal/version.moduleVersion=${version}" ];
 
@@ -51,7 +52,7 @@ buildGoModule ({
 
   meta = with lib; {
     homepage = "https://gitlab.com/gitlab-org/gitaly";
-    description = "Git RPC service for handling all the git calls made by GitLab";
+    description = "A Git RPC service for handling all the git calls made by GitLab";
     platforms = platforms.linux ++ [ "x86_64-darwin" ];
     maintainers = teams.gitlab.members;
     license = licenses.mit;

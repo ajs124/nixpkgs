@@ -16,7 +16,10 @@ buildGoModule rec {
 
   patches = [
     ./remove-hardcoded-locations.patch
-    ./go-mod-tidy.patch
+
+    # This patch was created by doing `nix run nixpkgs#go -- mod tidy`
+    # TODO: Remove it again, once a future release updated the go.mod.
+    ./go-1_21.patch
   ];
 
   vendorHash = "sha256-7TUHD14/aCs3lkpTy5CH9WYUc1Ud6rDFCx+JgsINvxU=";
